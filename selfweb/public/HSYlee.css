@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'iansui';
+  src: url("Iansui-Regular.ttf");
+}
+
+html{
+    background:fixed;
+    background-size:cover;
+    background-repeat: no-repeat;
+    font-family: Helvetica, iansui;
+}
+
+body{
+    background-color: #F0F4FF;
+    margin: 0;
+    padding: 0;
+}
+
+.web_topbar{
+    width: auto;
+    background-color: antiquewhite;
+    overflow: hidden;
+}
+.sizetitle1{
+    font-size: 48px;
+    color:royalblue;
+    top: 7px;
+    left: 10px;
+    position: relative;
+}
+.sizetitle2{
+    font-size: 48px;
+    color:rgb(9, 161, 221);
+    top: 7px;
+    left: 10px;
+    position: relative;
+    
+}
+.profile_img{
+    border: 4px solid white;
+    border-radius: 100%;
+    display: block;
+    margin: 30px auto 8px auto;
+
+}
+
+:root {
+  --neon-text-light: rgba(255,255,255, .25);
+  --neon-text-color: #04f;
+  --neon-text-stroke: #4CF1FF;
+}
+.name_1{
+    display: block;
+    color: rgb(107, 196, 231);
+    text-align: center;
+    font-size: 64px;
+    font-weight: bold;
+    line-height: 1;
+	text-shadow: 
+		-0.2rem -0.2rem 1rem var(--neon-text-light),
+		0.2rem 0.2rem 1rem var(--neon-text-light),
+		0 0 1rem var(--neon-text-color),
+		0 0 2rem var(--neon-text-color),
+		0 0 3rem var(--neon-text-color),
+		0 0 4rem var(--neon-text-color),
+		0 0 5rem var(--neon-text-color);
+    margin: 30px 10px 40px 10px;
+}
+.index_self{
+    background-color: aliceblue;
+    display: block;
+    text-align: center;
+    width: 600px;
+    margin: 0 auto 0 auto;
+    padding: 20px;
+}
+
+#putsometext{
+    font-size: 30px;
+    text-shadow: 10px 10px 10px rgb(185, 185, 185);
+}
+
+
+.sidebar {
+  position: fixed;
+  top: auto;
+  left: 0;
+  height: 100%;
+  width: 35px;
+  display: flex;
+  overflow-x: hidden;
+  flex-direction: column;
+  background: #161a2d;
+  padding: 25px 20px;
+  transition: all 0.4s ease;
+}
+.sidebar:hover {
+  width: 325px;
+}
+.sidebar .sidebar-header {
+  display: flex;
+  align-items: center;
+}
+.sidebar .sidebar-header img {
+  width: 64px;
+  border-radius: 50%;
+  margin: 0 -12px;
+}
+
