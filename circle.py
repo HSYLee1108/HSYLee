@@ -9,15 +9,15 @@ from datetime import datetime
 pyautogui.PAUSE = 0
 
 # === 參數 ===
-interval = 1          # 每次往返後的等待秒數
+interval = 0.1          # 每次往返後的等待秒數
 round_trip_sec = 0.4  # 上半圓「右→左→右」往返時間（秒）
 radius = 240
 steps_half = 40       # 半圓分段；來回共 2*steps_half 次移動
 
 # === 位置（螢幕中偏右、偏下）===
 width, height = pyautogui.size()
-center_x = width * 5 // 6
-center_y = int(height * 0.65)
+center_x =1645
+center_y = 680
 
 # 每步延遲（確保整段約 round_trip_sec 秒）
 per_step_sleep = (round_trip_sec / 2) / steps_half
