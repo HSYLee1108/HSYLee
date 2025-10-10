@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rock Your Body — Lyrics Only</title>
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    /* 中央顯示歌詞的舞台區 */
+    .stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* 單字歌詞樣式（中央大字 + fade-in 動畫） */
+    .word {
+      position: absolute;
+      text-align: center;
+      font-weight: 900;
+      letter-spacing: .04em;
+      line-height: 1.1;
+      filter: drop-shadow(0 6px 24px rgba(255,255,255,.06));
+      animation: fade-in 420ms ease-out both;
+      font-size: clamp(36px, 10vw, 112px); /* 自動依螢幕大小縮放 */
+    }
+
+    /* 淡入動畫：從縮小+模糊 → 清晰放大 */
+    @keyframes fade-in {
+      0% { opacity: 0; transform: scale(.92); filter: blur(2px); }
+      100% { opacity: 1; transform: scale(1); filter: blur(0); }
+    }
+
+    /* 開始播放按鈕 */
+    .btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      color: #fff;
+      border: 1px solid #2a2a2a;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <!-- 歌詞顯示區 -->
+  <div class="stage">
+    <div id="word" class="word"></div>
+  </div>
+
+  <!-- 觸發歌詞播放的按鈕 -->
+  <button id="start" class="btn">▶ 顯示歌詞</button>
+
+  <script>
+    // === 1️⃣ 歌詞時間軸資料 ===
+    // time：表示該詞要出現的時間（單位：秒，從開始按下按鈕算起）
+    const lyrics = [
+      { text: "I", time: 0.0 },
+      { text: "wanna", time: 0.3 },
+      { text: "da-", time: 0.8 },
+      { text: "I", time: 1.5 },
+      { text: "wanna", time: 1.8 },
+      { text: "dance", time: 2.3 },
+      { text: "in", time: 2.9 },
+      { text: "the", time: 3.2 },
+      { text: "lights", time: 3.5 },
+      { text: "I", time: 4.5 },
+      { text: "wanna", time: 4.8 },
+      { text: "ro-", time: 5.3 },
+      { text: "I", time: 5.9 },
+      { text: "wanna", time: 6.2 },
+      { text: "rock", time: 6.7 },
+      { text: "your", time: 7.2 },
+      { text: "body", time: 7.7 },
+    ];
+
+    // === 2️⃣ DOM 物件 ===
+    const wordEl = document.getElementById('word');   // 中央顯示歌詞的元素
+    const startBtn = document.getElementById('start'); // 開始播放按鈕
+
+    // === 3️⃣ 狀態變數 ===
+    let currentIndex = -1; // 目前顯示到第幾個字
+    let startTime = null;  // 開始播放的時間點（用於計時）
+    let raf = 0;           // requestAnimationFrame 的 ID（方便停止）
+
+    // === 4️⃣ 更新中央文字 ===
+    function setWord(i) {
+      if (i === currentIndex || i < 0 || i >= lyrics.length) return;
+      currentIndex = i;
+      wordEl.textContent = lyrics[i].text;
+
+      // 重新觸發動畫（先清掉再強制重繪）
+      wordEl.style.animation = 'none';
+      void wordEl.offsetHeight; // 觸發 reflow
+      wordEl.style.animation = '';
+    }
+
+    // === 5️⃣ 根據時間不斷更新畫面 ===
+    function tick() {
+      // 經過的秒數
+      const t = (Date.now() - startTime) / 1000;
+
+      // 找出第一個 time 大於目前時間的詞
+      const next = lyrics.findIndex(l => l.time > t);
+      const idx = (next === -1) ? lyrics.length - 1 : next - 1;
+      setWord(idx);
+
+      raf = requestAnimationFrame(tick);
+    }
+
+    // === 6️⃣ 按下開始按鈕時，重設並播放 ===
+    startBtn.addEventListener('click', () => {
+      currentIndex = -1;
+      startTime = Date.now();    // 設定起始時間
+      cancelAnimationFrame(raf); // 避免重複呼叫
+      tick();
+    });
+  </script>
+</body>
+</html>
